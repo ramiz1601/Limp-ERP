@@ -1,0 +1,6 @@
+{
+  "name": "Qatar Limo",
+  "description": "Qatar Limo - Premium Mobility ERP & Fleet Management System",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+  </defs>
+  <!-- Rounded Base Shield -->
+  <rect x="8" y="8" width="144" height="144" rx="36" fill="url(#bgGrad)" stroke="url(#goldGrad)" stroke-width="4"/>
+  
+  <!-- Crown Element -->
+  <path d="M42 98 L50 62 L68 76 L80 48 L92 76 L110 62 L118 98 Z" fill="url(#goldGrad)"/>
+  
+  <!-- Jewels on Crown Peaks -->
+  <circle cx="50" cy="58" r="4" fill="#FDE68A" />
+  <circle cx="80" cy="44" r="5" fill="#FFFBEB" />
+  <circle cx="110" cy="58" r="4" fill="#FDE68A" />
+  
+  <!-- Base Crown Band -->
+  <rect x="42" y="98" width="76" height="10" rx="3" fill="#B45309"/>
+  <circle cx="56" cy="103" r="2.5" fill="#FDE68A"/>
+  <circle cx="80" cy="103" r="2.5" fill="#FDE68A"/>
+  <circle cx="104" cy="103" r="2.5" fill="#FDE68A"/>
+  
+  <!-- Stylized Letter 'P' -->
+  <text x="80" y="88" font-family="'Cinzel', 'Trajan Pro', 'Georgia', serif" font-size="28" font-weight="bold" fill="#0F172A" text-anchor="middle">P</text>
+  
+  <!-- Bottom Ribbon text -->
+  <text x="80" y="128" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="900" letter-spacing="2" fill="url(#goldGrad)" text-anchor="middle">PRINCE LIMO</text>
+</svg>

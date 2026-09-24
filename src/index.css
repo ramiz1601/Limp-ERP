@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #f5f8fb;
+    color: #122038;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+}
+
+/* Print Rules for A4 Contract */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #contract-print-overlay,
+  #contract-print-overlay * {
+    visibility: visible;
+  }
+  #contract-print-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .printable-sheet {
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 100% !important;
+    padding: 20mm !important;
+    margin: 0 !important;
+  }
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+}

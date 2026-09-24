@@ -1,0 +1,284 @@
+{
+  "entities": {
+    "Vehicle": {
+      "title": "Vehicle",
+      "description": "Limousine and fleet vehicles registered in Qatar Limo ERP",
+      "type": "object",
+      "properties": {
+        "plate": { "type": "string", "maxLength": 50 },
+        "plateType": { "type": "string", "enum": ["Limo", "Private"] },
+        "make": { "type": "string", "maxLength": 100 },
+        "model": { "type": "string", "maxLength": 100 },
+        "year": { "type": "number" },
+        "color": { "type": "string", "maxLength": 50 },
+        "vin": { "type": "string", "maxLength": 100 },
+        "currentMileage": { "type": "number" },
+        "fuelType": { "type": "string", "maxLength": 50 },
+        "ownership": { "type": "string", "enum": ["Company Owned", "Driver Financed"] },
+        "status": { "type": "string", "enum": ["Available", "On Rent", "Assigned", "Maintenance", "Accident", "Inactive", "Sold", "Reserved"] },
+        "currentDriverId": { "type": "string" },
+        "purchasePrice": { "type": "number" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["plate", "make", "model", "status"]
+    },
+    "Driver": {
+      "title": "Driver",
+      "description": "Limousine and company drivers registered in Qatar Limo ERP",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 150 },
+        "driverType": { "type": "string", "enum": ["Company Driver", "Outside/NOC Driver"] },
+        "mobile": { "type": "string", "maxLength": 50 },
+        "qid": { "type": "string", "maxLength": 50 },
+        "qidExpiry": { "type": "string" },
+        "drivingLicense": { "type": "string", "maxLength": 50 },
+        "drivingLicenseExpiry": { "type": "string" },
+        "noc": { "type": "string", "maxLength": 50 },
+        "nocExpiry": { "type": "string" },
+        "status": { "type": "string", "enum": ["Active", "Inactive", "Blocked"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["name", "driverType", "mobile", "qid", "status"]
+    },
+    "Contract": {
+      "title": "Contract",
+      "description": "Monthly rental agreements between Qatar Limo / Prince Group and drivers",
+      "type": "object",
+      "properties": {
+        "contractNo": { "type": "string", "maxLength": 50 },
+        "driverId": { "type": "string" },
+        "driverName": { "type": "string" },
+        "driverQid": { "type": "string" },
+        "driverMobile": { "type": "string" },
+        "vehicleId": { "type": "string" },
+        "vehiclePlate": { "type": "string" },
+        "vehicleDetails": { "type": "string" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "currentMileage": { "type": "number" },
+        "monthlyAmount": { "type": "number" },
+        "securityDeposit": { "type": "number" },
+        "status": { "type": "string", "enum": ["Active", "Completed", "Terminated"] },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["contractNo", "driverId", "vehicleId", "startDate", "monthlyAmount"]
+    },
+    "Assignment": {
+      "title": "Assignment",
+      "description": "Vehicle assignments linking vehicle to driver",
+      "type": "object",
+      "properties": {
+        "vehicleId": { "type": "string" },
+        "vehiclePlate": { "type": "string" },
+        "driverId": { "type": "string" },
+        "driverName": { "type": "string" },
+        "type": { "type": "string" },
+        "startDate": { "type": "string" },
+        "startMileage": { "type": "number" },
+        "rent": { "type": "number" },
+        "status": { "type": "string", "enum": ["Active", "Completed"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["vehicleId", "driverId", "startDate"]
+    },
+    "Handover": {
+      "title": "Handover",
+      "description": "Vehicle handover and return inspections",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["Handover", "Return"] },
+        "vehicleId": { "type": "string" },
+        "driverId": { "type": "string" },
+        "assignmentId": { "type": "string" },
+        "date": { "type": "string" },
+        "mileage": { "type": "number" },
+        "fuelLevel": { "type": "string" },
+        "condition": { "type": "string" },
+        "penalty": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["type", "vehicleId", "mileage"]
+    },
+    "Payment": {
+      "title": "Payment",
+      "description": "Driver rental payments and collections",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "driverId": { "type": "string" },
+        "driverName": { "type": "string" },
+        "vehicleId": { "type": "string" },
+        "vehiclePlate": { "type": "string" },
+        "type": { "type": "string", "enum": ["Vehicle Rent", "Installment", "Other Income"] },
+        "amount": { "type": "number" },
+        "method": { "type": "string", "enum": ["Bank Transfer", "Cash", "Card", "Other"] },
+        "status": { "type": "string", "enum": ["Completed", "Pending"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["amount", "method", "date"]
+    },
+    "Financing": {
+      "title": "Financing",
+      "description": "Vehicle financing schedules and installment setups",
+      "type": "object",
+      "properties": {
+        "vehicleId": { "type": "string" },
+        "driverId": { "type": "string" },
+        "vehiclePrice": { "type": "number" },
+        "downPayment": { "type": "number" },
+        "financedAmount": { "type": "number" },
+        "monthlyInstallment": { "type": "number" },
+        "numberOfInstallments": { "type": "number" },
+        "startDate": { "type": "string" },
+        "status": { "type": "string", "enum": ["Active", "Completed", "Overdue"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["vehicleId", "driverId", "vehiclePrice", "monthlyInstallment"]
+    },
+    "Installment": {
+      "title": "Installment",
+      "description": "Individual financing installments",
+      "type": "object",
+      "properties": {
+        "financingId": { "type": "string" },
+        "installmentNumber": { "type": "number" },
+        "vehicleId": { "type": "string" },
+        "driverId": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "amount": { "type": "number" },
+        "paid": { "type": "number" },
+        "remaining": { "type": "number" },
+        "status": { "type": "string", "enum": ["Paid", "Overdue", "Partially Paid", "Upcoming"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["financingId", "dueDate", "amount", "status"]
+    },
+    "Income": {
+      "title": "Income",
+      "description": "Company income records in QAR",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "category": { "type": "string", "enum": ["Vehicle Rent", "Driver Installments", "Security Deposit", "Penalty", "Other Income"] },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["Cash", "Bank Transfer", "Card", "Other"] },
+        "vehicleId": { "type": "string" },
+        "driverId": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["date", "category", "amount", "paymentMethod"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Company expense records in QAR",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "category": { "type": "string", "enum": ["Vehicle Maintenance", "Vehicle Repairs", "Fuel", "Insurance", "Istimara/Registration", "Salaries", "Office Rent", "Utilities", "Fines", "Car Wash", "Parts", "Administrative Expenses", "Other Expenses"] },
+        "amount": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["Cash", "Bank Transfer", "Card", "Other"] },
+        "vehicleId": { "type": "string" },
+        "driverId": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["date", "category", "amount", "paymentMethod"]
+    },
+    "Maintenance": {
+      "title": "Maintenance",
+      "description": "Vehicle maintenance service records",
+      "type": "object",
+      "properties": {
+        "vehicleId": { "type": "string" },
+        "date": { "type": "string" },
+        "mileage": { "type": "number" },
+        "type": { "type": "string" },
+        "garage": { "type": "string" },
+        "cost": { "type": "number" },
+        "status": { "type": "string" },
+        "next": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["vehicleId", "date", "cost"]
+    },
+    "Employee": {
+      "title": "Employee",
+      "description": "Company employees and staff records",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 150 },
+        "position": { "type": "string" },
+        "department": { "type": "string" },
+        "mobile": { "type": "string" },
+        "qidExpiry": { "type": "string" },
+        "salary": { "type": "number" },
+        "status": { "type": "string", "enum": ["Active", "On Leave", "Terminated"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["name", "position", "salary", "status"]
+    },
+    "DocumentRecord": {
+      "title": "DocumentRecord",
+      "description": "Expiry tracked documents for vehicles, drivers, employees",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "entity": { "type": "string" },
+        "entityId": { "type": "string" },
+        "number": { "type": "string" },
+        "expiry": { "type": "string" },
+        "fileUrl": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["type", "entity", "number", "expiry"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "System activity and audit logs",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string" },
+        "user": { "type": "string" },
+        "action": { "type": "string" },
+        "reference": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["date", "user", "action"]
+    },
+    "Setting": {
+      "title": "Setting",
+      "description": "Global ERP configurations",
+      "type": "object",
+      "properties": {
+        "currency": { "type": "string" },
+        "timezone": { "type": "string" },
+        "warning1Days": { "type": "number" },
+        "warning2Days": { "type": "number" },
+        "warning3Days": { "type": "number" },
+        "paymentMethods": { "type": "array" }
+      }
+    }
+  },
+  "firestore": {
+    "/vehicles/{vehicleId}": { "schema": "Vehicle", "description": "Fleet vehicles" },
+    "/drivers/{driverId}": { "schema": "Driver", "description": "Drivers roster" },
+    "/contracts/{contractId}": { "schema": "Contract", "description": "Rental contracts" },
+    "/assignments/{assignmentId}": { "schema": "Assignment", "description": "Vehicle assignments" },
+    "/handovers/{handoverId}": { "schema": "Handover", "description": "Handover and return inspections" },
+    "/payments/{paymentId}": { "schema": "Payment", "description": "Rental and installment payments" },
+    "/financing/{financingId}": { "schema": "Financing", "description": "Vehicle financing plans" },
+    "/installments/{installmentId}": { "schema": "Installment", "description": "Individual installments" },
+    "/income/{incomeId}": { "schema": "Income", "description": "Company income entries" },
+    "/expenses/{expenseId}": { "schema": "Expense", "description": "Company expense entries" },
+    "/maintenance/{maintenanceId}": { "schema": "Maintenance", "description": "Maintenance work orders" },
+    "/employees/{employeeId}": { "schema": "Employee", "description": "Company employees" },
+    "/documents/{documentId}": { "schema": "DocumentRecord", "description": "Document expiry tracking" },
+    "/auditLogs/{auditLogId}": { "schema": "AuditLog", "description": "System audit logs" },
+    "/settings/{settingId}": { "schema": "Setting", "description": "System settings" }
+  }
+}

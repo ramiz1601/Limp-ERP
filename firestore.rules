@@ -1,0 +1,78 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny for unmatched collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    match /vehicles/{vehicleId} {
+      allow read, write: if true;
+    }
+
+    match /drivers/{driverId} {
+      allow read, write: if true;
+    }
+
+    match /contracts/{contractId} {
+      allow read, write: if true;
+    }
+
+    match /assignments/{assignmentId} {
+      allow read, write: if true;
+    }
+
+    match /handovers/{handoverId} {
+      allow read, write: if true;
+    }
+
+    match /payments/{paymentId} {
+      allow read, write: if true;
+    }
+
+    match /financing/{financingId} {
+      allow read, write: if true;
+    }
+
+    match /installments/{installmentId} {
+      allow read, write: if true;
+    }
+
+    match /income/{incomeId} {
+      allow read, write: if true;
+    }
+
+    match /expenses/{expenseId} {
+      allow read, write: if true;
+    }
+
+    match /maintenance/{maintenanceId} {
+      allow read, write: if true;
+    }
+
+    match /employees/{employeeId} {
+      allow read, write: if true;
+    }
+
+    match /documents/{documentId} {
+      allow read, write: if true;
+    }
+
+    match /auditLogs/{auditLogId} {
+      allow read, write: if true;
+    }
+
+    match /settings/{settingId} {
+      allow read, write: if true;
+    }
+
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    match /test/{testId} {
+      allow read, write: if true;
+    }
+  }
+}
