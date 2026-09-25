@@ -619,15 +619,18 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
                   className="w-full h-full rounded-full object-cover"
                 />
               ) : (
-                currentUser?.displayName?.charAt(0) || currentUser?.email?.charAt(0)?.toUpperCase() || 'A'
+                (currentUser?.displayName || localStorage.getItem('prince_erp_operator_name') || 'Admin')
+                  .charAt(0)
+                  .toUpperCase()
               )}
             </div>
             <div className="hidden sm:block text-left">
-              <div className="text-xs font-bold text-[#122038]">
-                {currentUser?.displayName || 'Admin Operator'}
+              <div className="text-xs font-bold text-[#122038] max-w-[140px] truncate">
+                {currentUser?.displayName || localStorage.getItem('prince_erp_operator_name') || 'Admin Operator'}
               </div>
-              <div className="text-[10px] text-[#718198] font-medium">
-                System Administrator
+              <div className="text-[10px] text-[#718198] font-medium flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
+                <span>{currentUser ? 'Google Verified' : 'Terminal Operator'}</span>
               </div>
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-[#718198]" />
@@ -644,7 +647,13 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
                 />
                 <div className="min-w-0 flex-1">
                   <div className="font-bold text-xs text-[#122038] truncate">{settings?.companyName || 'Prince Limousine & Car Rental'}</div>
-                  <div className="text-[10px] text-[#718198] truncate">{settings?.address || 'Doha, Qatar'} • ERP Terminal</div>
+                  {currentUser?.email ? (
+                    <div className="text-[10px] text-emerald-600 font-medium truncate font-mono">
+                      {currentUser.email}
+                    </div>
+                  ) : (
+                    <div className="text-[10px] text-[#718198] truncate">{settings?.address || 'Doha, Qatar'} • ERP Terminal</div>
+                  )}
                 </div>
               </div>
 
@@ -663,9 +672,14 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
 
               <div className="pt-1 border-t border-gray-100">
                 <button
-                  onClick={() => {
-                    logout();
+                  id="topheader-sign-out-btn"
+                  onClick={async () => {
                     setIsUserMenuOpen(false);
+                    if (onLockTerminal) {
+                      onLockTerminal();
+                    } else {
+                      await logout();
+                    }
                   }}
                   className="w-full text-left px-3 py-2 text-xs text-[#ef5553] hover:bg-red-50 rounded-lg transition-colors cursor-pointer flex items-center space-x-2 font-semibold"
                 >

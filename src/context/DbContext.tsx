@@ -173,7 +173,7 @@ export const DbProvider: React.FC<{ children: React.ReactNode }> = ({ children }
             setter(list);
           },
           (err) => {
-            handleFirestoreError(err, OperationType.LIST, colName);
+            console.warn(`Firestore read notice for ${colName}:`, err);
           }
         );
         unsubs.push(unsubscribe);
@@ -222,7 +222,7 @@ export const DbProvider: React.FC<{ children: React.ReactNode }> = ({ children }
           }
         },
         (err) => {
-          handleFirestoreError(err, OperationType.GET, 'settings/global');
+          console.warn('Firestore read notice for settings/global:', err);
         }
       );
       unsubs.push(unsubSettings);

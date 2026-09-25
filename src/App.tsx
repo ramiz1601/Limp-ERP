@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { DbProvider, useDb } from './context/DbContext';
 import { Sidebar, MenuItemId } from './components/Sidebar';
 import { TopHeader } from './components/TopHeader';
@@ -25,8 +25,10 @@ import { VehicleHistoryView } from './views/VehicleHistoryView';
 
 const AppContent: React.FC = () => {
   const { settings } = useDb();
+  const { currentUser, logout } = useAuth();
   const [activeMenu, setActiveMenu] = useState<MenuItemId>('Dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [justSignedOut, setJustSignedOut] = useState(false);
 
   // Check if terminal security passcode has already been unlocked in this session/browser
   const [isSecurityUnlocked, setIsSecurityUnlocked] = useState<boolean>(() => {
@@ -36,10 +38,19 @@ const AppContent: React.FC = () => {
     );
   });
 
-  const handleLockTerminal = () => {
+  const handleLockTerminal = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
     localStorage.removeItem('prince_erp_security_auth');
+    localStorage.removeItem('prince_erp_operator_name');
+    localStorage.removeItem('prince_erp_auth_time');
     sessionStorage.removeItem('prince_erp_security_auth');
+    sessionStorage.removeItem('prince_erp_operator_name');
     setIsSecurityUnlocked(false);
+    setJustSignedOut(true);
   };
 
   const handleQuickAction = (action: string) => {
@@ -141,7 +152,11 @@ const AppContent: React.FC = () => {
     return (
       <SecurityGate
         settings={settings}
-        onAuthenticated={() => setIsSecurityUnlocked(true)}
+        justSignedOut={justSignedOut}
+        onAuthenticated={() => {
+          setJustSignedOut(false);
+          setIsSecurityUnlocked(true);
+        }}
       />
     );
   }
@@ -157,6 +172,7 @@ const AppContent: React.FC = () => {
         }}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
+        onLockTerminal={handleLockTerminal}
       />
 
       {/* Main Content Area */}

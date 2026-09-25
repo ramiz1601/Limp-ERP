@@ -26,6 +26,7 @@ import {
   ShieldCheck,
   Settings,
   ChevronRight,
+  LogOut,
 } from 'lucide-react';
 import { useDb } from '../context/DbContext';
 
@@ -63,6 +64,7 @@ interface SidebarProps {
   notificationCount?: number;
   isOpen?: boolean;
   onClose?: () => void;
+  onLockTerminal?: () => void;
 }
 
 interface MenuSection {
@@ -82,6 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   notificationCount = 0,
   isOpen = false,
   onClose,
+  onLockTerminal,
 }) => {
   const { settings } = useDb();
   const selected = currentMenu || activeMenu || 'Dashboard';
@@ -241,10 +244,24 @@ export const Sidebar: React.FC<SidebarProps> = ({
         ))}
       </div>
 
-      {/* Footer Info */}
-      <div className="p-3 bg-[#0a1726] border-t border-[#13283f] text-center text-[10px] text-[#718198]">
-        <div className="truncate font-semibold text-gray-400">{settings?.companyName || 'Prince Limousine'} • Fleet ERP</div>
-        <div className="text-[9px] text-[#c9a15b]/80 mt-0.5">{settings?.address || 'Doha, State of Qatar'}</div>
+      {/* Footer Info & Sign Out */}
+      <div className="p-3 bg-[#0a1726] border-t border-[#13283f] flex flex-col gap-2">
+        <div className="text-center text-[10px] text-[#718198]">
+          <div className="truncate font-semibold text-gray-400">{settings?.companyName || 'Prince Limousine'} • Fleet ERP</div>
+          <div className="text-[9px] text-[#c9a15b]/80 mt-0.5">{settings?.address || 'Doha, State of Qatar'}</div>
+        </div>
+
+        {onLockTerminal && (
+          <button
+            id="sidebar-signout-btn"
+            onClick={onLockTerminal}
+            className="w-full py-1.5 px-2.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-300 hover:text-red-200 border border-red-500/20 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+            title="Sign out and secure fleet terminal"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span>Sign Out & Lock</span>
+          </button>
+        )}
       </div>
     </aside>
   </>
